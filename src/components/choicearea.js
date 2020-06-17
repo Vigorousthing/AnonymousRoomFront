@@ -1,7 +1,17 @@
 import React, { Component } from 'react';
+import store from '../store'
 
 
 class ChoiceArea extends Component {
+    state = {roomname: ""}
+
+    constructor(props) {
+        super(props)
+        store.subscribe(function() {
+            // this.setState({roomname: store.getState().roomname})
+        }.bind(this))
+    }
+
     mystyle = {
         backgroundColor: 'brown',
         display: 'flex',
@@ -11,7 +21,6 @@ class ChoiceArea extends Component {
         textAlign: 'center',
         alignItems: 'center',
     }
-    state = {text: ''}
     render() {
         return (
             <div style={this.mystyle}>
@@ -24,16 +33,19 @@ class ChoiceArea extends Component {
                 <div>
                     <form action="/chat" onSubmit={function(e){
                         e.preventDefault();
-                        var val = this.state.text
-                        console.log(val)
-                        this.setState({text: ""})
+                        store.dispatch({
+                            type:'typed', 
+                            roomname: this.state.roomname
+                        })
+                        this.setState({roomname: ""})
                     }.bind(this)}>
                     type your room name
                         <input type="text" 
-                            value={this.state.text}
+                            value={this.state.roomname}
                             onChange={function(e) {
                                 e.preventDefault();
-                                this.setState({text: e.target.value})
+                                console.log(e.target.value)
+                                this.setState({roomname: e.target.value})
                             }.bind(this)}/>
                         <button>Enter the Room!</button>
                     </form>

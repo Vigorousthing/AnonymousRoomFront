@@ -5,10 +5,11 @@ import { animateScroll } from "react-scroll";
 
 class ChatBox extends Component {
     state = {
-        text_list: store.getState().text, 
+        text_list: [], 
         text: ""
     }
-    s_url = 'ws://10.0.0.119:7779/ws/chat/newconnection/'
+
+    s_url = 'ws://10.0.0.119:7779/ws/chat/' + store.getState().roomname + "/"
     connection = new WebSocket(this.s_url);
 
     constructor(props) {
