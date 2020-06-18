@@ -4,6 +4,8 @@ const initail_state = {roomname: "myroom", mode: "main"}
 const myreducer = (state=initail_state, action) => {
     if (action.type === 'typed') {
         return {...state, roomname: action.roomname, mode: "chat"}
+    } else if (action.type === 'return') {
+        return {...state, mode: "main"}
     }
     return state;
 }

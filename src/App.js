@@ -1,59 +1,43 @@
 import React, { Component } from 'react';
-import MainPage from './components/mainpage'
+// import MainPage from './components/mainpage'
 import ChatPage from './components/chatpage'
 import './App.css';
 import store from './store'
-import { Link, Route, Switch, BrowserRouter as Router } from "react-router-dom";
-import ChatBox from './components/chatbox';
+// import { Link, Route, Switch, BrowserRouter as Router } from "react-router-dom";
+// import ChatBox from './components/chatbox';
 
 
 class App extends Component {
+  state = {mode: "main"}
+
   outer_style = {
     justify_content: 'center',
     width: "100%",
-  }
-  inner_style = {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   }
 
   constructor(props) {
     super(props)
     store.subscribe(function() {
-        // this.setState({roomname: store.getState().roomname})
+        this.setState({mode: store.getState().mode})
     }.bind(this))
   }
 
   render() {
+    // if (this.state.mode === "main") {
+    //   var page = <MainPage></MainPage>
+    // } else if (this.state.mode === "chat") {
+    //   var page = <ChatPage></ChatPage>
+    // }
     return (
       <div>
-      {/* <Router>
-      <header>
-        <Link to="/">
-          <button>Home</button>
-        </Link>
-        <Link to="/about">
-          <button>About</button>
-        </Link>
-      </header>
-      <hr />
-      <main>
-        <Switch>
-          <Route exact path="/" component={MainPage} />
-          <Route path="/about" component={ChatPage} />
-          {/* <Route component={NotFound} /> */}
-        {/* </Switch>
-      </main>
-      </Router> */}
-        <ChatPage></ChatPage>
         {/* <MainPage></MainPage> */}
-        {/* <ChatPage></ChatPage> */}
+        {/* {page} */}
+
+        <ChatPage></ChatPage>
       </div>
     );
   }
 }
 
 export default App;
-
         

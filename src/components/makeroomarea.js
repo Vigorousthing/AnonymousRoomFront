@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import {Router, Route, Link, RouteHandler} from 'react-router'
 import store from '../store'
+import ChatPage from '../components/chatpage'
+import { Link, Route, Switch, BrowserRouter as Router } from "react-router-dom";
 
 
 // class MakeRoomArea extends Component {

@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
 import ChatBox from '../components/chatbox'
+// import ChatSelection from '../components/chat_selection'
 
 
 class ChatPage extends Component {
   outer_style = {
-    justify_content: 'center',
-    width: "100%",
-  }
-  inner_style = {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'auto',
+    // width: "100%",
   }
   render() {
     return (
       <div style={this.outer_style}>
           <ChatBox></ChatBox>
+          {/* <ChatSelection></ChatSelection> */}
       </div>
     );
   }

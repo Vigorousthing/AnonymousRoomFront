@@ -3,9 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "local-storage": "^2.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "0.9.5"
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "0.9.5",
+    "react-scroll": "^1.7.16",
+    "react-scroll-to-bottom": "^2.0.0",
+    "redux": "^4.0.5"
   },
   "devDependencies": {},
   "scripts": {
@@ -14,5 +19,5 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "proxy" : "http://locathost:8000"
+  "proxy": "http://locathost:8000"
 }
