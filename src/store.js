@@ -1,6 +1,10 @@
 import {createStore} from 'redux';
 
-const initail_state = {roomname: "myroom", mode: "main"}
+const initail_state = {
+    roomname: "myroom", 
+    mode: "main"
+}
+
 const myreducer = (state=initail_state, action) => {
     if (action.type === 'typed') {
         return {...state, roomname: action.roomname, mode: "chat"}
