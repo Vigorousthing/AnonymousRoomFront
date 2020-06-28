@@ -2,7 +2,9 @@ import {createStore} from 'redux';
 
 const initail_state = {
     roomname: "myroom", 
-    mode: "main"
+    mode: "main",
+    poll_info_list: [],
+    connection: null,
 }
 
 const myreducer = (state=initail_state, action) => {
@@ -10,6 +12,12 @@ const myreducer = (state=initail_state, action) => {
         return {...state, roomname: action.roomname, mode: "chat"}
     } else if (action.type === 'return') {
         return {...state, mode: "main"}
+    } else if (action.type === 'POLLSUBMIT') {
+        console.log('poll submit')
+    } else if (action.type === 'ENTERROOM') {
+        return  {...state, connection: action.connection}
+    } else if (action.type === 'POLLVIEW') {
+        return  {...state, poll_info_list: action.poll_info_list}
     }
     return state;
 }

@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import store from '../store'
 import ls from 'local-storage'
 import TestApi from "./apitest"
+import PostPoll from '../components/pollbox'
+import VotePoll from '../components/pollview'
+
 
 
 class ChatBox extends Component {
@@ -25,6 +28,7 @@ class ChatBox extends Component {
         like_list: [],
         personal_list: [],
         personal_id_list: [],
+        poll_info_list: [],
         text: "",
         tmp: {},
         connection: null,
@@ -34,7 +38,7 @@ class ChatBox extends Component {
         scrolltobottom: true,
         imageUrl: null,
     }
-
+    
     constructor(props) {
         super(props)
         store.subscribe(function() {
@@ -91,9 +95,16 @@ class ChatBox extends Component {
                     this.setState({
                         like_list: data.like_list.map(
                             (each, idx) => {return {likeness: each[0], message: each[1], opinion: each[2], time: each[3], id: each[4]}}),
+                        poll_info_list: data.poll_info,
                         time: s_time
                     })
                     ls.set('like_list', this.state.like_list)
+                } else if (data.type === 'poll_view') {
+                    ls.set('poll_info', data.poll_info)
+                    this.setState({
+                        poll_info_list: data.poll_info
+                    }, () => {store.dispatch({type: "POLLVIEW", poll_info_list: data.poll_info})}
+                    )
                 }
 
             } else if (typeof(e.data) === "object") {
@@ -121,9 +132,8 @@ class ChatBox extends Component {
                     }
                 )
             }
-
-
-            
+        // this.scrollToBottom();
+        }
 
         if (ls.get('text_list') === null) {
             var load_list = []
@@ -142,11 +152,11 @@ class ChatBox extends Component {
         } else {
             var opinion = ls.get('opinion')
         }
-        if (ls.get('like_list') === null) {
-            var like_list = []
-        } else {
-            var like_list = ls.get('like_list')
-        }
+        // if (ls.get('like_list') === null) {
+            // var like_list = []
+        // } else {
+            // var like_list = ls.get('like_list')
+        // }
         if (ls.get('personal_id_list') === null) {
             var p_id_list = []
         } else {
@@ -157,6 +167,7 @@ class ChatBox extends Component {
         // } else {
         //     var imageUrl = ls.get('imageUrl')
         // }
+
         this.setState({
             connection: connection,
             text_list: load_list,
@@ -164,14 +175,15 @@ class ChatBox extends Component {
             personal_id_list: p_id_list,
             text: ls.get('text'),
             opinion: opinion,
-            like_list: like_list,
+            // like_list: like_list,
             filter_opinion: ls.get('filter_opinion'),
             filter_target: ls.get('filter_target'),
-            scrolltobottom: ls.get('scrolltobottom')
+            scrolltobottom: ls.get('scrolltobottom'),
+            poll_info_list: this.state.poll_info_list
         })
 
-        // this.scrollToBottom();
-        }
+        store.dispatch({type:'ENTERROOM', connection: connection})
+
     }
     componentDidUpdate() {
         if (this.state.scrolltobottom === true) {
@@ -424,7 +436,8 @@ class ChatBox extends Component {
                             }.bind(this)}/>
                         {/* <button type="submit">submit</button> */}
                     </form>
-                    
+                    <PostPoll></PostPoll>
+
                     {/* picture file send */}
                     <input 
                     style={{
@@ -545,7 +558,7 @@ class ChatBox extends Component {
                                     text_list: [],
                                     opinion: 1,
                                     like_list: [],
-                                }, () => {console.log(this.state.text)})
+                                })
                             }.bind(this)}>cache clear</button>
 
                 </div>
@@ -683,7 +696,20 @@ class ChatBox extends Component {
                 </div>
             </div>
 
-        <TestApi></TestApi>
+            <div>
+                PollList
+                {/* Poll List View */}
+                <div style={{
+                                border: 'solid',
+                                height: '500px',
+                                width: '250px',
+                                overflow: "auto",
+                                borderRadius: '15px',
+                            }} id="pollelem">
+                        {/* {console.log(this.state.poll_info_list)} */}
+                        {this.state.poll_info_list.map((each, idx) => <VotePoll poll_info={this.state.poll_info_list[idx]} p_idx={idx}></VotePoll>)}
+                </div>
+            </div>
         </div>
       )
     }

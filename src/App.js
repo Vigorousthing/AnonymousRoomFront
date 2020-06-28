@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import ChatPage from './components/chatpage'
 import TestApi from './components/apitest'
 import TestBox from './components/test'
+import CustomerAdd from './components/pollbox'
+
 import './App.css';
 import store from './store'
 
@@ -29,10 +31,11 @@ class App extends Component {
     return (
       <div>
         {/* <MainPage></MainPage> */}
-        {/* {page} */}
-        <ChatPage></ChatPage>
         {/* <TestBox></TestBox> */}
         {/* <TestApi></TestApi> */}
+        {/* {page} */}
+        <ChatPage></ChatPage>
+        {/* <CustomerAdd></CustomerAdd> */}
       </div>
     );
   }
